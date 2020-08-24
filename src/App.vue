@@ -5,7 +5,7 @@
         <div class="font-normal text-4xl text-white">
           @josephuspaye/timer
         </div>
-        <p class="text-gray-400 text-base mt-3 text-xl">
+        <p class="text-gray-400 text-base mt-4 text-xl">
           A small and smooth (60-fps) countdown timer and stopwatch for Vue and
           vanilla JS.
           <a
@@ -28,9 +28,11 @@
           >
         </div>
 
-        <CheckButton :checked.sync="allowOverflow" class="mt-4 lg:mt-0 lg:ml-3"
-          >Allow overflow</CheckButton
-        >
+        <div class="h-10 mt-4 lg:mt-0 lg:ml-3">
+          <CheckButton :checked.sync="allowOverflow"
+            >Allow overflow</CheckButton
+          >
+        </div>
 
         <div class="mt-4 lg:mt-0 lg:ml-3 lg:flex lg:items-center h-10">
           <span
