@@ -1,24 +1,24 @@
 <template>
     <div id="app">
-        <div class="max-w-5xl p-6 mx-auto">
-            <div class="border-b border-gray-800 pt-8 pb-10">
-                <div class="font-light text-4xl text-white">
+        <div class="max-w-5xl p-6 pt-12 mx-auto">
+            <div class="border-b border-gray-800 pt-8 pb-16">
+                <div class="font-normal text-4xl text-white">
                     @josephuspaye/timer
                 </div>
                 <p class="text-gray-400 text-base mt-3 text-xl">
                     A small and smooth (60-fps) countdown timer and stopwatch
                     for Vue and vanilla JS.
+                    <a
+                        href="https://github.com/JosephusPaye/timer"
+                        rel="noopener"
+                        target="_blank"
+                        class="pb-1 inline-flex border-b border-gray-500 leading-none text-gray-500 hover:text-gray-100 focus:text-gray-100 hover:border-gray-100 focus:border-gray-100"
+                        >View documentation</a
+                    >.
                 </p>
-                <a
-                    href="https://github.com/JosephusPaye/timer"
-                    rel="noopener"
-                    target="_blank"
-                    class="text-lg rounded-full py-3 px-8 inline-flex leading-none mt-5 bg-blue-600 text-white hover:bg-blue-700 focus:bg-blue-700"
-                    >Documentation</a
-                >
             </div>
 
-            <div class="flex flex-col lg:flex-row min-w-0 mt-12">
+            <div class="flex flex-col lg:flex-row min-w-0 mt-16">
                 <div class="flex h-10">
                     <ToggleButton id="countdown" :value.sync="type"
                         >Countdown</ToggleButton
@@ -37,7 +37,7 @@
                 <div class="mt-4 lg:mt-0 lg:ml-3 lg:flex lg:items-center h-10">
                     <span
                         class="bg-gray-800 px-4 inline-flex items-center justify-center text-white h-full cursor-default"
-                        >Length:</span
+                        >Length</span
                     >
                     <input
                         type="number"
@@ -48,7 +48,11 @@
                 </div>
             </div>
 
-            <div class="mt-10">
+            <div class="mt-4 italic text-gray-600 text-xl">
+                See browser console for timer events.
+            </div>
+
+            <div class="mt-8">
                 <Timer
                     ref="timer"
                     :type="type"
@@ -61,13 +65,14 @@
                     @pause="onPause"
                     @resume="onResume"
                     @overflow="onOverflow"
-                    v-slot="{ time, state, timeElapsed, isOverflowed, isDone }"
+                    v-slot="{ time, state, isOverflowed, isDone }"
                 >
                     <div>
                         <div
                             class="text-6xl font-mono font-thin"
                             :class="[
-                                isOverflowed ? 'text-red-400' : 'text-gray-400',
+                                isOverflowed ? 'text-red-500' : 'text-gray-400',
+                                isDone ? 'flash' : '',
                             ]"
                         >
                             {{ time.h }}:{{ time.m }}:{{ time.s }}:{{ time.ms }}
@@ -89,24 +94,6 @@
                             </Button>
                             <Button @click="reset">Reset</Button>
                         </div>
-
-                        <code
-                            ><pre
-                                v-text="
-                                    JSON.stringify(
-                                        {
-                                            state,
-                                            time,
-                                            timeElapsed,
-                                            isOverflowed,
-                                            isDone,
-                                        },
-                                        null,
-                                        '  '
-                                    )
-                                "
-                            ></pre
-                        ></code>
                     </div>
                 </Timer>
             </div>
@@ -122,7 +109,9 @@ import Button from './Button.vue';
 
 export default {
     name: 'App',
+
     components: { CheckButton, ToggleButton, Button, Timer },
+
     data() {
         return {
             type: 'countdown',
@@ -130,6 +119,7 @@ export default {
             length: 5 * 1000,
         };
     },
+
     methods: {
         toggle() {
             this.$refs.timer.toggle();
@@ -175,5 +165,24 @@ export default {
 
 body {
     @apply bg-gray-900;
+}
+
+.flash {
+    animation-name: flash;
+    animation-duration: 1.5s;
+    animation-iteration-count: 2;
+}
+
+@keyframes flash {
+    from,
+    50%,
+    to {
+        opacity: 1;
+    }
+
+    25%,
+    75% {
+        opacity: 0;
+    }
 }
 </style>
