@@ -80,11 +80,11 @@ export const defaultUnits: TimeUnit[] = [
 export function getTimeParts(time: number, units: TimeUnit[] = defaultUnits) {
     const parts: { [key: string]: string } = {};
 
-    units.forEach((unit) => {
+    for (const unit of units) {
         parts[unit.type] = unit.format(
             Math.floor(time / unit.milliseconds) % unit.nextUnitFactor
         );
-    });
+    }
 
     return parts;
 }

@@ -1,5 +1,5 @@
 import { Timer, TimerType } from './timer';
-import { getTimeParts } from './timer-util';
+import { getTimeParts } from './util';
 
 export default {
     name: 'Timer',
