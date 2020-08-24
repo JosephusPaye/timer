@@ -108,7 +108,14 @@ export class Timer {
      * Set the timer's length. Will stop the timer and reset internal state for a new run.
      */
     setLength(length: number) {
+        const wasRunning = this.state === 'running';
+
         this.setState('stopped');
+
+        if (wasRunning) {
+            this.events.emit('stop');
+        }
+
         this.resetInternal();
         this.length = length;
     }
