@@ -10,10 +10,10 @@
 
 <script>
 export default {
-  name: 'ToggleButton',
+  name: "ToggleButton",
   props: {
     id: null,
-    value: null,
-  },
+    value: null
+  }
 };
 </script>

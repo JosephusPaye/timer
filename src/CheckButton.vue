@@ -39,9 +39,9 @@
 
 <script>
 export default {
-  name: 'CheckButton',
+  name: "CheckButton",
   props: {
-    checked: Boolean,
-  },
+    checked: Boolean
+  }
 };
 </script>
