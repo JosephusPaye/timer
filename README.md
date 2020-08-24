@@ -49,7 +49,7 @@ You can create a timer with the default template, which shows days, hours, minut
 -   `timer__seconds` - added to the timer seconds (a `span` element)
 -   `timer__milliseconds` - added to the timer milliseconds (a `span` element)
 
-The following creates a simple countdown timer with 15 seconds (view [CodePen](https://codepen.io/JosephusPaye/pen/wvGgyNz)):
+The following creates a simple countdown timer with 15 seconds ([view on CodePen](https://codepen.io/JosephusPaye/pen/wvGgyNz)):
 
 ```vue
 <template>
@@ -72,7 +72,7 @@ export default {
 
 You can use a [scoped slot](https://vuejs.org/v2/guide/components-slots.html#Scoped-Slots) to render your own template.
 
-The following renders a custom template with 10-second stopwatch that allows for overflow ([view CodePen](https://codepen.io/JosephusPaye/pen/MWyJQMV)):
+The following renders a custom template with 10-second stopwatch that allows for overflow ([view on CodePen](https://codepen.io/JosephusPaye/pen/MWyJQMV)):
 
 ```vue
 <template>
@@ -288,7 +288,7 @@ Listen for any of the following timer events using `timer.events.on('event', cal
 | :-------- | :------------------------------------------------------------------------------------------------------- |
 | (default) | The default slot. Can hold any content with a single root element, and is passed the props listed below. |
 
-#### Slot props
+#### Default slot props
 
 | Prop           | Type    | Description                                                                                                                                                                     |
 | :------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
