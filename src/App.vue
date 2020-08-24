@@ -91,6 +91,32 @@
           </div>
         </Timer>
       </div>
+
+      <div class="mt-8 text-gray-700 text-sm">
+        Created by
+        <a
+          class="underline hover:text-gray-200 focus:text-gray-200"
+          href="https://twitter.com/JosephusPaye"
+          target="_blank"
+          rel="noopener"
+          >Josephus Paye II</a
+        >
+        for
+        <a
+          class="underline hover:text-gray-200 focus:text-gray-200"
+          href="https://twitter.com/JosephusPaye/status/1214853295023411200"
+          target="_blank"
+          rel="noopener"
+          >#CreateWeekly</a
+        >. Available on
+        <a
+          class="underline hover:text-gray-200 focus:text-gray-200"
+          href="https://github.com/JosephusPaye/timer"
+          target="_blank"
+          rel="noopener"
+          >GitHub</a
+        >.
+      </div>
     </div>
   </div>
 </template>
