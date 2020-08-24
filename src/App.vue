@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import { TimerVue as Timer } from "../lib/dist/timer.esm.js";
+import { TimerVue as Timer } from "@josephuspaye/timer";
 import CheckButton from "./CheckButton.vue";
 import ToggleButton from "./ToggleButton.vue";
 import Button from "./Button.vue";

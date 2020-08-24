@@ -929,10 +929,10 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
-"@josephuspaye/timer@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@josephuspaye/timer/-/timer-0.0.2.tgz#be53a8ff6bfc2687820d623cf38f58070d7b2224"
-  integrity sha512-zcG10/v2Sp6Rj+d0DpxByJRLw2TqgSBbkYjBPaZlAVPPMzmhv0klxYRAVKwdXrnPrV7/npyvlp2fEWPgLz5kQA==
+"@josephuspaye/timer@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@josephuspaye/timer/-/timer-0.1.1.tgz#1aa31f0370276f8a9d144af6493dba9948811b2f"
+  integrity sha512-bYDO/0sytvcpjew0Sm19zPIWmKOzxCRIslgFJLjaB7qkJp/w3bJVAkt7HIADWGrzOh5fcIIIf6vMNHLLdBX+2w==
   dependencies:
     mitt "^2.1.0"
 
