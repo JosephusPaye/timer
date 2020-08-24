@@ -292,7 +292,7 @@ Listen for any of the following timer events using `timer.events.on('event', cal
 
 | Prop           | Type    | Description                                                                                                                                                                     |
 | :------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `time`         | Object  | The timer's current time as an object with keys `d` (days), `h` (hours), `m` (minutes), `s` (seconds), and `m` (milliseconds). Each value is a padded string ready for display. |
+| `time`         | Object  | The timer's current time as an object with keys `d` (days), `h` (hours), `m` (minutes), `s` (seconds), and `ms` (milliseconds). Each value is a padded string ready for display. |
 | `timeElapsed`  | Number  | For a countdown, the total time remaining, in milliseconds. For a stopwatch, the total time elapsed, in milliseconds.                                                           |
 | `state`        | String  | The timer's current state, one of `stopped`, `running` or `paused`.                                                                                                             |
 | `isDone`       | Boolean | Whether or not the timer has reached its length.                                                                                                                                |
