@@ -49,13 +49,13 @@ You can create a timer with the default template, which shows days, hours, minut
 -   `timer__seconds` - added to the timer seconds (a `span` element)
 -   `timer__milliseconds` - added to the timer milliseconds (a `span` element)
 
-The following creates a simple countdown timer with 15 seconds ([view on CodePen](https://codepen.io/JosephusPaye/pen/wvGgyNz)):
+The following creates a simple 15-second countdown timer that starts automatically ([view on CodePen](https://codepen.io/JosephusPaye/pen/wvGgyNz)):
 
 ```vue
 <template>
     <div>
         <Timer type="countdown" autoStart :length="15 * 1000" />
-        <!-- Change to `type="stopwatch"` for a stopwatch -->
+        <!-- change the above to `type="stopwatch"` for a stopwatch -->
     </div>
 </template>
 
@@ -72,7 +72,7 @@ export default {
 
 You can use a [scoped slot](https://vuejs.org/v2/guide/components-slots.html#Scoped-Slots) to render your own template.
 
-The following renders a custom template with 10-second stopwatch that allows for overflow ([view on CodePen](https://codepen.io/JosephusPaye/pen/MWyJQMV)):
+The following renders a custom template with 15-second stopwatch that starts automatically and allows for overflow ([view on CodePen](https://codepen.io/JosephusPaye/pen/MWyJQMV)):
 
 ```vue
 <template>
@@ -84,7 +84,7 @@ The following renders a custom template with 10-second stopwatch that allows for
             :length="15 * 1000"
             v-slot="{ time, isDone, isOverflowed }"
         >
-            <!-- Change to `type="countdown"` for a countdown timer -->
+            <!-- change the above to `type="countdown"` for a countdown timer -->
             <div>
                 <span :class="{ 'is-overflowed': isOverflowed }">
                     <span>{{ time.d }}d</span>
