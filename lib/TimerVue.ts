@@ -16,7 +16,7 @@ export default {
             type: Number,
             default: 0,
         },
-        autostart: {
+        autoStart: {
             type: Boolean,
             default: false,
         },
@@ -46,7 +46,7 @@ export default {
     },
 
     mounted() {
-        if (this.autostart) {
+        if (this.autoStart) {
             this.timer.start();
         }
     },
@@ -56,9 +56,9 @@ export default {
             this.timer.type = newType;
         },
 
-        length() {
-            this.reset();
-            this.initTimer();
+        length(newLength: number) {
+            this.timer.setLength(newLength);
+            this.timeElapsed = this.type === 'countdown' ? this.length : 0;
         },
 
         allowOverflow(allowOverflow: boolean) {
@@ -123,45 +123,37 @@ export default {
 
     methods: {
         start() {
-            if (this.timer) {
-                this.timer.start();
-            }
+            this.timer.start();
         },
 
         stop() {
-            if (this.timer) {
-                this.timer.stop();
-            }
+            this.timer.stop();
         },
 
         pause() {
-            if (this.timer) {
-                this.timer.pause();
-            }
+            this.timer.pause();
         },
 
         resume() {
-            if (this.timer) {
-                this.timer.resume();
-            }
+            this.timer.resume();
         },
 
         toggle() {
             if (this.state === 'paused') {
-                this.state = this.timer.resume();
+                this.timer.resume();
             } else if (this.state === 'running') {
-                this.state = this.timer.pause();
+                this.timer.pause();
             } else if (this.state === 'stopped') {
-                this.state = this.timer.start();
+                this.timer.start();
             } else {
                 throw new Error(
-                    'unable to toggle: unknown timer state: ' + this.state
+                    'unable to toggle timer: unknown state: ' + this.state
                 );
             }
         },
 
         reset() {
-            this.state = this.timer.reset();
+            this.timer.reset();
         },
 
         initTimer() {
@@ -176,19 +168,35 @@ export default {
             this.state = this.timer.state;
             this.timeElapsed = this.type === 'countdown' ? this.length : 0;
 
+            this.timer.events.on('state', (state) => {
+                this.state = state;
+                this.$emit('state', state);
+            });
+
+            this.timer.events.on('overflow', (isOverflowed) => {
+                this.isOverflowed = isOverflowed;
+
+                if (isOverflowed) {
+                    this.$emit('overflow');
+                }
+            });
+
+            this.timer.events.on('done', (done) => {
+                this.isDone = done;
+
+                if (done) {
+                    this.$emit('done');
+                }
+            });
+
             this.timer.events.on('tick', (time) => {
-                this.onTick(time);
+                this.timeElapsed = time;
                 this.$emit('tick', time);
             });
 
-            this.timer.events.on('done', () => {
-                this.onDone();
-                this.$emit('done');
-            });
-
-            this.timer.events.on('reset', (newTime) => {
-                this.onReset(newTime);
-                this.$emit('reset', newTime);
+            this.timer.events.on('reset', (time) => {
+                this.timeElapsed = time;
+                this.$emit('reset', time);
             });
 
             this.timer.events.on('start', () => {
@@ -206,21 +214,6 @@ export default {
             this.timer.events.on('resume', () => {
                 this.$emit('resume');
             });
-        },
-
-        onTick(time: number) {
-            this.timeElapsed = time;
-            this.isOverflowed = this.timer.isOverflowed;
-        },
-
-        onReset(newTime: number) {
-            this.timeElapsed = newTime;
-            this.isOverflowed = this.timer.isOverflowed;
-            this.isDone = this.timer.isDone;
-        },
-
-        onDone() {
-            this.isDone = this.timer.isDone;
         },
     },
 };

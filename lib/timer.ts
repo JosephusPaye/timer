@@ -105,55 +105,95 @@ export class Timer {
     }
 
     /**
-     * Reset the timer
-     *
-     * @return The new timer state after resetting
+     * Set the timer's length. Will stop the timer and reset internal state for a new run.
      */
-    reset() {
-        this.state = 'stopped';
+    setLength(length: number) {
+        this.setState('stopped');
+        this.resetInternal();
+        this.length = length;
+    }
+
+    /**
+     * Set the timer state to the given state
+     */
+    private setState(state: TimerState) {
+        this.state = state;
+        this.events.emit('state', state);
+    }
+
+    /**
+     * Set `isDone` to the given value
+     */
+    private setIsDone(isDone: boolean) {
+        const oldIsDone = this.isDone;
+
+        this.isDone = isDone;
+        this.doneEventEmitted = isDone;
+
+        if (oldIsDone !== isDone) {
+            this.events.emit('done', isDone);
+        }
+    }
+
+    /**
+     * Set `isOverflowed` to the given value
+     */
+    private setIsOverflowed(isOverflowed: boolean) {
+        const oldIsOverflowed = this.isOverflowed;
+
+        this.isOverflowed = isOverflowed;
+
+        if (oldIsOverflowed !== isOverflowed) {
+            this.events.emit('overflow', isOverflowed);
+        }
+    }
+
+    /**
+     * Reset the internal timer state for a possible new run
+     */
+    private resetInternal({
+        isDone,
+        isOverflowed,
+    }: { isDone?: boolean; isOverflowed?: boolean } = {}) {
+        this.setIsDone(isDone ?? false);
+        this.setIsOverflowed(isOverflowed ?? false);
         this.pausedAt = 0;
         this.endingAt = 0;
-        this.isOverflowed = false;
-        this.isDone = false;
-        this.doneEventEmitted = false;
+    }
 
+    /**
+     * Reset the timer
+     */
+    reset() {
+        this.setState('stopped');
+        this.resetInternal();
         this.events.emit('reset', this.type === 'countdown' ? this.length : 0);
-
-        return this.state;
     }
 
     /**
      * Start the timer
-     *
-     * @return The new timer state after starting
      */
     start() {
-        this.state = 'running';
+        this.resetInternal();
+        this.setState('running');
+
         this.endingAt = Date.now() + this.length;
         this.tick();
 
         this.events.emit('start');
-
-        return this.state;
     }
 
     /**
      * Stop the timer
-     *
-     * @return The new timer state after stopping
      */
-    stop() {
-        this.state = 'stopped';
-
+    stop(options = { isDone: false }) {
+        this.setState('stopped');
+        this.resetInternal({ isDone: options.isDone });
         this.events.emit('stop');
-
-        return this.state;
     }
 
     /**
      * Pause the timer
-     *
-     * @return The new timer state after pausing
      */
     pause() {
         if (this.state !== 'running') {
@@ -161,17 +201,13 @@ export class Timer {
         }
 
         this.pausedAt = Date.now();
-        this.state = 'paused';
+        this.setState('paused');
 
         this.events.emit('pause');
-
-        return this.state;
     }
 
     /**
      * Resume the timer
-     *
-     * @return The new timer state after resuming
      */
     resume() {
         if (this.state !== 'paused') {
@@ -181,12 +217,10 @@ export class Timer {
         this.endingAt += Date.now() - this.pausedAt;
         this.pausedAt = 0;
 
-        this.state = 'running';
+        this.setState('running');
         this.tick();
 
         this.events.emit('resume');
-
-        return this.state;
     }
 
     /**
@@ -205,22 +239,20 @@ export class Timer {
         }
 
         if (Date.now() >= this.endingAt) {
-            this.isDone = true;
-
             if (this.allowOverflow) {
+                if (!this.doneEventEmitted) {
+                    this.setIsDone(true);
+                }
+
                 this.events.emit('tick', this.time);
-                this.isOverflowed = true;
+
+                this.setIsOverflowed(true);
             } else {
                 this.events.emit(
                     'tick',
                     this.type === 'countdown' ? 0 : this.length
                 );
-                this.stop();
-            }
-
-            if (!this.doneEventEmitted) {
-                this.events.emit('done');
-                this.doneEventEmitted = true;
+                this.stop({ isDone: true });
             }
         } else {
             this.events.emit('tick', this.time);
