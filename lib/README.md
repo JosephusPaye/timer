@@ -1,6 +1,6 @@
 # Timer
 
-A small and performant countdown timer and stopwatch for Vue and vanilla JS.
+A small and smooth (60-fps) countdown timer and stopwatch for Vue and vanilla JS.
 
 ## Demo
 
