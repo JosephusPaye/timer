@@ -1,6 +1,6 @@
 {
   "name": "@josephuspaye/timer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A small and smooth (60-fps) countdown timer and stopwatch for Vue and vanilla JS",
   "main": "dist/timer.cjs.js",
   "module": "dist/timer.esm.js",
